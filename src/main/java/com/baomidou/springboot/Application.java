@@ -1,10 +1,15 @@
 package com.baomidou.springboot;
 
+import com.baomidou.springboot.controller.UserController;
+import com.qianmi.ms.starter.rocketmq.annotation.RocketMQMessageListener;
+import com.qianmi.ms.starter.rocketmq.core.RocketMQListener;
+import groovy.util.logging.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -13,6 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @SpringBootApplication
+@Slf4j
 public class Application {
 
     protected final static Logger logger = LoggerFactory.getLogger(Application.class);

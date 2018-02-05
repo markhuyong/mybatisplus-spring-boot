@@ -23,7 +23,8 @@ public class GeneratorServiceEntity {
     @Test
     public void generateCode(){
         String packageName = "com.baomidou.springboot";
-        generateByTables(packageName, "user", "role");
+//        generateByTables(packageName, "user", "role");
+        generateByTables(packageName, "pb_treadmill_report", "role");
     }
 
     private void generateByTables(String packageName, String... tableNames){
@@ -33,7 +34,7 @@ public class GeneratorServiceEntity {
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
                 .setUsername("root")
-                .setPassword("")
+                .setPassword("root")
                 .setDriverName("com.mysql.jdbc.Driver");
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
@@ -44,7 +45,7 @@ public class GeneratorServiceEntity {
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
                 .setAuthor("K神带你飞")
-                .setOutputDir("d:\\codeGen")
+                .setOutputDir("./codeGen")
                 .setFileOverride(true);
         new AutoGenerator().setGlobalConfig(config)
                 .setDataSource(dataSourceConfig)

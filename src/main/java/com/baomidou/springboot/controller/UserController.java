@@ -1,21 +1,24 @@
 package com.baomidou.springboot.controller;
 
-import java.util.Date;
-
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
+import com.baomidou.springboot.entity.OrderPaidEvent;
+import com.baomidou.springboot.entity.User;
+import com.baomidou.springboot.entity.enums.AgeEnum;
+import com.baomidou.springboot.entity.enums.PhoneEnum;
+import com.baomidou.springboot.service.IUserService;
+import com.qianmi.ms.starter.rocketmq.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
-import com.baomidou.springboot.entity.User;
-import com.baomidou.springboot.entity.enums.AgeEnum;
-import com.baomidou.springboot.entity.enums.PhoneEnum;
-import com.baomidou.springboot.service.IUserService;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 代码生成器，参考源码测试用例：
@@ -28,6 +31,20 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+
+    @GetMapping("/send")
+    public void send() {
+        rocketMQTemplate.convertAndSend("test-topic-1", "Hello, World!");
+        rocketMQTemplate.send("test-topic-1", MessageBuilder.withPayload("Hello, World! I'm from spring message").build());
+        rocketMQTemplate.convertAndSend("test-topic-2", new OrderPaidEvent("T_001", new BigDecimal("88.00")));
+
+//        rocketMQTemplate.destroy(); // notes:  once rocketMQTemplate be destroyed, you can not send any message again with this rocketMQTemplate
+
+    }
 
     /**
      * 分页 PAGE

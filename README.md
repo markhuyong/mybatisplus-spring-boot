@@ -7,6 +7,8 @@
 
 > 为简化开发工作、提高生产率而生
 
+- [Quick Start - Apache RocketMQ](https://rocketmq.apache.org/docs/quick-start/)
+
 # 简介 | Intro
 
 Mybatis Plus - Spring Boot Demo
